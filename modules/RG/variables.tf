@@ -1,15 +1,27 @@
-variable "location" {
+variable "region" {
     type = string
-}
-
-variable "naming_prefix" {
-  type    = string
 }
 
 variable "environment" {
   type    = string
 }
 
-variable "tag_owner" {
+variable "owner" {
+  type    = string
+}
+
+variable "rg_name" {
+  type    = string
+}
+
+variable "plan_name" {
+  type    = string
+}
+
+variable "vnet_name" {
+  type    = string
+}
+
+variable "subnet_name" {
   type    = string
 }
