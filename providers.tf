@@ -10,7 +10,7 @@ terraform {
     resource_group_name  = "TestRG"
     storage_account_name = "githubactionsdemo"
     container_name       = "terraformstate"
-    key                  = "dev.tfstate"
+    key                  = "dev.terraform.tfstate"
   }
 }
 
