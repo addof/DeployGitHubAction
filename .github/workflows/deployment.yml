@@ -41,7 +41,8 @@ jobs:
         #     path: 0.14.8      
 
         - name: Terraform Plan
-          run: terraform plan -input=false
+          id: plan
+          run: terraform plan -no-color
 
         - name: Terraform Apply
           if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
