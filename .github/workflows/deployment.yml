@@ -10,11 +10,10 @@ jobs:
       name: 'Terraform'
       runs-on: ubuntu-latest
       env:
-        CLIENTID: ${{ secrets.CLIENTID }}
-        SECRETVALUE: ${{ secrets.SECRETVALUE }}
-        SECRETID: ${{ secrets.SECRETID }}
-        SUBSC_ID: ${{ secrets.SUBSC_ID }}
-        TENANTID: ${{ secrets.TENANTID }}
+        ARM_CLIENT_ID: ${{ secrets.CLIENTID }}
+        ARM_CLIENT_SECRET: ${{ secrets.SECRETVALUE }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSC_ID }}
+        ARM_TENANT_ID: ${{ secrets.TENANTID }}
         RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
         STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
         CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
