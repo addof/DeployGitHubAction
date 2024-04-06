@@ -1,0 +1,49 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+    terraform:
+      name: 'Terraform'
+      runs-on: ubuntu-latest
+      env:
+        ARM_CLIENT_ID: ${{ secrets.CLIENTID }}
+        ARM_CLIENT_SECRET: ${{ secrets.SECRETVALUE }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSC_ID }}
+        ARM_TENANT_ID: ${{ secrets.TENANTID }}
+        RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
+        STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+        CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+        
+      defaults:
+       run:
+        shell: bash  
+
+      steps:
+        # Checkout the repository to the GitHub Actions runner
+        - name: Checkout
+          uses: actions/checkout@v4.1.1
+        
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v2.0.3
+          with:
+           terraform_version: 1.6.6
+        # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+        - name: Terraform Init
+          run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT_NAME" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP_NAME"
+
+        # - name: Terraform Format
+        #   uses: dflook/terraform-fmt@v1
+        #   with: 
+        #     path: 0.14.8      
+
+        - name: Terraform Plan
+          run: terraform plan -var-file "./envvariables.tfvars"
+
+        - name: Terraform Apply
+          if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+          run: terraform apply -auto-approve -input=false
+
